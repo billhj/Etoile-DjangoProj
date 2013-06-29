@@ -1,0 +1,27 @@
+<div align="left">
+<h2><a name="inFo">PersonalInfo:</a></h2>
+{% if person %}
+<table align="left">
+	<tr class="info">
+		<td>
+			<img alt="hello" class="publicationsImage" src="{{pub.coverimagepath}}"/>
+			<div class="">Name: {{person.first_name}} {{person.last_name}}</div>
+			<div class="">Gender: {{person.sex}}</div>
+			<div class="">Birth: {{person.birthday}}</div>
+			<div class="">Website: {{person.website}}</div>
+			<div class="">Work Address: {{person.workaddress}} {{person.workcity}}</div>
+			<div class="">              {{person.workstate_province}} {{person.workcountry}}</div>
+			<div class="">Phone: {{person.workphone}}</div>
+			<div class="">Personal Address: {{person.address}} {{person.city}}</div>
+			<div class="">              {{person.state_province}} {{person.country}}</div>
+			<div class="">Phone: {{person.phone}}</div>
+			<div class="">mobile: {{person.mobilephone}}</div>
+			<div class="">{{person.city}}</div>
+			<div class="">{{person.city}}</div>
+		</td>
+	</tr>
+</table>
+{% else %}
+    <p>No Person are available.</p>
+{% endif %}
+</div>
