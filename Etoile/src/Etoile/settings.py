@@ -133,6 +133,8 @@ TEMPLATE_DIRS = (
     TEMPLATE_PATH + '/template',
     TEMPLATE_PATH + '/LocateYOU/template',
     TEMPLATE_PATH + '/Authentication/template',
+    TEMPLATE_PATH + '/PersonalSite/template',
+    TEMPLATE_PATH + '/Publications/template',
 )
 
 INSTALLED_APPS = (
