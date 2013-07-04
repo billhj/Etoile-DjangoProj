@@ -43,6 +43,9 @@ def outputMapInfo(request):
 #     return render(request, 'mapview.html', context)
     
 def showLocation(request):
+    username = "anonymous"
+    if request.user.is_authenticated():
+        username = request.user.username
     'showlocation map'
     waypoints = Waypoint.objects.order_by('name')  
     worldborder = WorldBorder.objects.get(name="China")
@@ -50,6 +53,7 @@ def showLocation(request):
     waypoint = Waypoint(name=worldborder.name, geometry=geo)
     context = Context({
          'waypoint': waypoint,#waypoints[0],
+         'username': username,
      })
     #print(waypoints)
     return render(request, 'showlocation.html', context)

@@ -7,6 +7,8 @@ from django.contrib.auth import logout
 
 
 def login_view(request):
+    if request.user.is_authenticated():
+        return HttpResponseRedirect('/authentication/loggedin/')
     c = {}
     c.update(csrf(request))
     return render(request, 'login.html', c)
