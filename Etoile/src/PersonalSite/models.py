@@ -3,12 +3,12 @@ from django import forms
 
 
 # Create your models here.
-class Person(models.Model):
+class PersonInfo(models.Model):
     GENDER_CHOICES = (
                       ('M', 'Male'),
                       ('F', 'Female'),
                       )
-    id = models.AutoField(primary_key=True)
+    user_id = models.IntegerField(blank = False)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=40)
     sex = models.CharField(verbose_name=u"Sex", max_length=1, choices=GENDER_CHOICES)

@@ -5,5 +5,5 @@ Created on 5 juin 2013
 '''
 
 from django.contrib import admin
-from models import Person
-admin.site.register(Person)
+from models import PersonInfo
+admin.site.register(PersonInfo)
