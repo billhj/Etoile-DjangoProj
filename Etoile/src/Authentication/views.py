@@ -16,22 +16,34 @@ def login_view(request):
 def authenticate_view(request):
     username = request.POST.get('username','')
     password = request.POST.get('password','')
+    nextpath = request.POST.get('nextpath','')
     user = authenticate(username=username, password=password)
-    if user is not None:
-        if user.is_active:
-            login(request, user)
-            state = "You're successfully logged in!"
-            request.session['username'] = username
-            request.session['password'] = password
-            return HttpResponseRedirect('/authentication/loggedin/')
-            #return render(request, 'loggedin.html', {'state':state, 'username': username})
-            # Redirect to a success page.
+    if(nextpath is None):
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                state = "You're successfully logged in!"
+                request.session['username'] = username
+                request.session['password'] = password
+                return HttpResponseRedirect('/authentication/loggedin/')
+            else:
+                state = "Your account is not active, please contact the site admin."
         else:
-            # Return a 'disabled account' error message
-            state = "Your account is not active, please contact the site admin."
+            state = "Your username and/or password were incorrect."
+        return HttpResponseRedirect('/authentication/invalid/')
     else:
-        state = "Your username and/or password were incorrect."
-    return HttpResponseRedirect('/authentication/invalid/')
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                state = "You're successfully logged in!"
+                request.session['username'] = username
+                request.session['password'] = password
+                return HttpResponseRedirect(nextpath)
+            else:
+                state = "Your account is not active, please contact the site admin."
+        else:
+            state = "Your username and/or password were incorrect."
+        return HttpResponseRedirect(nextpath)
          
 def loggedin_view(request):
     return render(request, 'loggedin.html', {'full_name': request.user.username})
@@ -39,10 +51,11 @@ def loggedin_view(request):
 
 def logout_view(request):
     logout(request)
+    nextpath = request.POST.get('nextpath','')
+    if(nextpath is not None):
+        return HttpResponseRedirect(nextpath)
     return render(request, 'logout.html')
 
 
 def invalid_view(request):
     return render(request, 'invalid_login.html')
-
-            # Return an 'invalid login' error message.

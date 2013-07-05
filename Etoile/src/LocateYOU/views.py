@@ -53,7 +53,8 @@ def showLocation(request):
     waypoint = Waypoint(name=worldborder.name, geometry=geo)
     context = Context({
          'waypoint': waypoint,#waypoints[0],
-         'username': username,
+         'user': request.user,
+         'path': request.path,
      })
     #print(waypoints)
     return render(request, 'showlocation.html', context)
