@@ -5,7 +5,14 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 	<style>
-  		#draggable {float: right; width: 200; height: 800; padding: 0.5em; }
+  		#draggable {position: absolute; 
+  					top: 60px;  /* adjust value accordingly */
+  					right: 10px;  /* adjust value accordingly */ 
+  					width: 200; 
+  					height: 760; 
+  					opacity: 0.8;
+    				filter: alpha(opacity=50);
+  					}
   	</style>
 	<script>
 		  $(function() {
@@ -100,5 +107,5 @@
 	    .linkOFF {color: darkblue}
 	    .linkON {color: white; background-color: darkblue}
 	</style>
-	<div id=map></div>
+	<div id="map"></div>
 {% endblock %}

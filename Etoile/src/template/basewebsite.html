@@ -1,40 +1,55 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	{% block header %}{% endblock %}
+	<link rel="stylesheet" href="basewebsite.css" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
 	{% block login %}
-		<div style="background-color:orange">
+	<style type="text/css">
+  		#button{
+		-moz-box-shadow: 1px 1px 0px #000000;
+		-webkit-box-shadow: 1px 1px 0px #000000;
+		box-shadow: 1px 1px 0px #000000;
+		}
+		#login{
+		background:-webkit-gradient(linear, 9% 9%, 9% 70%, from(#D3D7D8), to(#D3D7D8))
+		}
+  	</style>
+		<div id="login">
 			{% if user.is_authenticated %}
 				<form action="/authentication/logout/" method="post">{% csrf_token %}
 					Hi {{user.username}} 
 				    <input type="hidden" name="nextpath" value="{{ path }}" id="nextpath"/>
-				    <input type="submit" value="logout" />
+				    <input type="submit" id="button" value="logout" />
 				</form>
 			{% else %}
-				<form action="/authentication/authenticate/" method="post">{% csrf_token %}
+			
+				<form action="/authentication/authenticate/" method="post" style="display:inline;">{% csrf_token %}
 				    <label for="username">User name:</label>
 				    <input type="text" name="username" value="" id="username"/>
 				    <label for="password">Password:</label>
 				    <input type="password" name="password" value="" id="password"/>
 				    <input type="hidden" name="nextpath" value="{{ path }}" id="nextpath"/>
-				    <input type="submit" value="login" />
+				    <input type="submit" id="button" value="login" />
 				</form>
-				<form action="/authentication/register/" method="post">{% csrf_token %}
-			  		<input type="submit" value="Register" />
+			
+			
+				<form action="/authentication/register/" method="post" style="display:inline;">{% csrf_token %}
+			  		<input type="submit" id="button" value="Register" />
 			  	</form>
+			
 			{% endif %}
 		</div>
 	{% endblock %}
 	
-	{% block menu %}{% endblock %}
     {% block content %}{% endblock %}
+    {% block menu %}{% endblock %}
     
     {% block footer %}
 	    <hr>
-	    <p>Thanks for visiting my site.</p>
+	    <p></p>
     {% endblock %}
 </body>
 </html>
