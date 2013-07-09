@@ -20,6 +20,9 @@
 	    <input type="hidden" name="nextpath" value="{{ path }}" id="nextpath"/>
 	    <input type="submit" value="login" />
 	</form>
+	<form action="/authentication/register/" method="post">{% csrf_token %}
+  		<input type="submit" value="Register" />
+  	</form>
 {% endif %}
 
 </div>

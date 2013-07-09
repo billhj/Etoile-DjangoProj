@@ -35,5 +35,12 @@ class Waypoint(models.Model):
         return '%s %s %s' % (self.name, self.geometry.x, self.geometry.y)
     
 
-
+class DeviceLocation(models.Model):
+    device_id = models.IntegerField(blank = False, unique = True)
+    time = models.DateTimeField(blank = False)
+    geometry = models.PointField(srid=4326)
+    objects = models.GeoManager()
+    
+    def __unicode__(self):
+        return '%s %s %s' % (self.name, self.geometry.x, self.geometry.y)
     

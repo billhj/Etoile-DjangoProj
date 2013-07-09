@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.template import Context#, loader
 from django.shortcuts import render#, get_object_or_404
 #from django.http import Http404
-from models import PersonInfo
+from UserDataManager.models import UserInfo
 
 def index(request):
     return HttpResponse("Hello, world. You're at the PersonInfo.")
@@ -20,8 +20,8 @@ def index(request):
 
 def outputPersonInfo(request):
     try:
-        person = PersonInfo.objects.using('default').get(id=1)
-    except PersonInfo.DoesNotExist:
+        person = UserInfo.objects.using('default').get(id=1)
+    except UserInfo.DoesNotExist:
         return HttpResponse("no person exist!!")
         #raise Http404      
     context = Context({

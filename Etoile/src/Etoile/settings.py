@@ -144,6 +144,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'UserDataManager',
     'Publications',
     'PersonalSite',
     # Uncomment the next line to enable the admin:

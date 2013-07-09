@@ -1,90 +1,104 @@
+{% extends "basewebsite.html" %}
 {% block header %}
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	<style>
+  		#draggable {float: right; width: 200; height: 800; padding: 0.5em; }
+  	</style>
+	<script>
+		  $(function() {
+		    $( "#draggable" ).draggable();
+		  });
+		  $(function() {
+		    $( "#accordion" ).accordion();
+		  });
+		  $(function() {
+		    $( "#tabs" ).tabs();
+		  });
+	</script>
 {% endblock %}
 
-{% block login %}
-<div style="background-color:orange">
-
-{% if user.is_authenticated %}
-	<form action="/authentication/logout/" method="post">{% csrf_token %}
-		Hi {{user.username}} 
-	    <input type="hidden" name="nextpath" value="{{ path }}" id="nextpath"/>
-	    <input type="submit" value="logout" />
-	</form>
-{% else %}
-	<form action="/authentication/authenticate/" method="post">{% csrf_token %}
-	    <label for="username">User name:</label>
-	    <input type="text" name="username" value="" id="username"/>
-	    <label for="password">Password:</label>
-	    <input type="password" name="password" value="" id="password"/>
-	    <input type="hidden" name="nextpath" value="{{ path }}" id="nextpath"/>
-	    <input type="submit" value="login" />
-	</form>
-	<form action="/authentication/register/" method="post">{% csrf_token %}
-  		<input type="submit" value="Register" />
-  	</form>
-{% endif %}
-
-</div>
-
+{% block menu %}
+	<div id="draggable" class="ui-widget-content">
+		<div id="accordion">
+			  <h1>Section 1</h1>
+			  <div>
+			    <p>
+			    Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
+			    </p>
+			  </div>
+			  <h3>Section 2</h3>
+			  <div>
+			    <p>
+			    Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet
+			    </p>
+			  </div>
+			  <h3>Section 3</h3>
+			  <div>
+			    <p>
+			    Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis.
+			    </p>
+			  </div>
+		</div>
+	</div>
 {% endblock %}
 
 {% block content %}
-<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-<script>
-var map, marker, waypointByID = {};
-
-{% if waypoint %}
-function initialize() {
-    map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 5,
-        center: new google.maps.LatLng({{waypoint.geometry.y}}, {{waypoint.geometry.x}}),
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    });
-    var center = new google.maps.LatLng({{waypoint.geometry.y}}, {{waypoint.geometry.x}});
-    if (marker) marker.setMap();
-    marker = new google.maps.Marker({map: map, position: center});
-    map.panTo(center);
-}
-{% endif %}
-
-{% for waypoint in waypoints %}
-waypointByID[{{waypoint.id}}] = {
-    name: "{{waypoint.name}}",
-    lat: {{waypoint.geometry.y}},
-    lng: {{waypoint.geometry.x}}
-};
-{% endfor %}
-
-
-$(document).ready(function () {
-    function activateWaypoints() {
-        // Add waypoint click handler
-        $('.waypoint').each(function () {
-            $(this).click(function() {
-                var waypoint = waypointByID[this.id];
-                var center = new google.maps.LatLng(waypoint.lat, waypoint.lng);
-                if (marker) marker.setMap();
-                marker = new google.maps.Marker({map: map, position: center});
-                map.panTo(center);
-            }).hover(
-                function () {this.className = this.className.replace('OFF', 'ON');},
-                function () {this.className = this.className.replace('ON', 'OFF');}
-            );
-        });
-    }
-    activateWaypoints();
-});
-
-window.onload = initialize;
-</script>
-<style>
-    body {font-family: sans-serif}
-    #map {width: $(window).width(); height: 800;}
-    #waypoints {overflow: auto; width: 500px; height: 100px}
-    .linkOFF {color: darkblue}
-    .linkON {color: white; background-color: darkblue}
-</style>
-<div id=map></div>
+	<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+	<script>
+		var map, marker, waypointByID = {};
+		{% if waypoint %}
+		function initialize() {
+		    map = new google.maps.Map(document.getElementById('map'), {
+		        zoom: 5,
+		        center: new google.maps.LatLng({{waypoint.geometry.y}}, {{waypoint.geometry.x}}),
+		        mapTypeId: google.maps.MapTypeId.ROADMAP
+		    });
+		    var center = new google.maps.LatLng({{waypoint.geometry.y}}, {{waypoint.geometry.x}});
+		    if (marker) marker.setMap();
+		    marker = new google.maps.Marker({map: map, position: center});
+		    map.panTo(center);
+		}
+		{% endif %}
+	
+		{% for waypoint in waypoints %}
+		waypointByID[{{waypoint.id}}] = {
+		    name: "{{waypoint.name}}",
+		    lat: {{waypoint.geometry.y}},
+		    lng: {{waypoint.geometry.x}}
+		};
+		{% endfor %}
+	
+	
+		$(document).ready(function () {
+		    function activateWaypoints() {
+		        // Add waypoint click handler
+		        $('.waypoint').each(function () {
+		            $(this).click(function() {
+		                var waypoint = waypointByID[this.id];
+		                var center = new google.maps.LatLng(waypoint.lat, waypoint.lng);
+		                if (marker) marker.setMap();
+		                marker = new google.maps.Marker({map: map, position: center});
+		                map.panTo(center);
+		            }).hover(
+		                function () {this.className = this.className.replace('OFF', 'ON');},
+		                function () {this.className = this.className.replace('ON', 'OFF');}
+		            );
+		        });
+		    }
+		    activateWaypoints();
+		});
+		
+		window.onload = initialize;
+	</script>
+	<style>
+	    body {font-family: sans-serif}
+	    #map {width: $(window).width(); height: 800;}
+	    #waypoints {overflow: auto; width: 500px; height: 100px}
+	    .linkOFF {color: darkblue}
+	    .linkON {color: white; background-color: darkblue}
+	</style>
+	<div id=map></div>
 {% endblock %}

@@ -5,13 +5,36 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-	{% block login %}{% endblock %}
-    <h1>My site</h1>
+	{% block login %}
+		<div style="background-color:orange">
+			{% if user.is_authenticated %}
+				<form action="/authentication/logout/" method="post">{% csrf_token %}
+					Hi {{user.username}} 
+				    <input type="hidden" name="nextpath" value="{{ path }}" id="nextpath"/>
+				    <input type="submit" value="logout" />
+				</form>
+			{% else %}
+				<form action="/authentication/authenticate/" method="post">{% csrf_token %}
+				    <label for="username">User name:</label>
+				    <input type="text" name="username" value="" id="username"/>
+				    <label for="password">Password:</label>
+				    <input type="password" name="password" value="" id="password"/>
+				    <input type="hidden" name="nextpath" value="{{ path }}" id="nextpath"/>
+				    <input type="submit" value="login" />
+				</form>
+				<form action="/authentication/register/" method="post">{% csrf_token %}
+			  		<input type="submit" value="Register" />
+			  	</form>
+			{% endif %}
+		</div>
+	{% endblock %}
+	
+	{% block menu %}{% endblock %}
     {% block content %}{% endblock %}
     
     {% block footer %}
-    <hr>
-    <p>Thanks for visiting my site.</p>
+	    <hr>
+	    <p>Thanks for visiting my site.</p>
     {% endblock %}
 </body>
 </html>
