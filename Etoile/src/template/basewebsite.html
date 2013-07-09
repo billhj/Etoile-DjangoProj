@@ -19,7 +19,7 @@
   	</style>
 		<div id="login">
 			{% if user.is_authenticated %}
-				<form action="/authentication/logout/" method="post">{% csrf_token %}
+				<form action="/authentication/logout/" method="post" style="display:inline;">{% csrf_token %}
 					Hi {{user.username}} 
 				    <input type="hidden" name="nextpath" value="{{ path }}" id="nextpath"/>
 				    <input type="submit" id="button" value="logout" />
